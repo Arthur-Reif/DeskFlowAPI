@@ -15,7 +15,7 @@ namespace DeskFlowAPI.Models.Entidades
         public string SolicitanteNome {get; set;}
         public DateTime DataAbertura {get; set;}
         public DateTime? DataFechamento {get; set;}
-        public string? Solucao {get; set;} //pode ser nulo, esta amarelinho pois tem q implementar logica ainda
+        public string Solucao {get; set;} //pode ser nulo, esta amarelinho pois tem q implementar logica ainda
         public int CategoriaId {get; set;}
         public Categoria Categoria {get; set;}
         public List<Interacao> Interacoes {get; set;} = new ();
