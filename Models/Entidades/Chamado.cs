@@ -1,5 +1,3 @@
-using Microsoft.Identity.Client;
-
 namespace DeskFlowAPI.Models.Entidades
 {
 //     Chamado: o pedido de ajuda em si
