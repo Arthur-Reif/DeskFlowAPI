@@ -18,7 +18,7 @@ namespace DeskFlowAPI.Models.Entidades
         public string Autor { get; set; }
         public string Mensagem { get; set; }
         public DateTime Registro { get; set; }
-        public int ChmadoId { get; set; }
+        public int ChamadoId { get; set; }
         public Chamado Chamado { get; set; }
     }
 }

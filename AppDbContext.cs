@@ -5,6 +5,9 @@ namespace DeskFlowAPI
 {
     public class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions <AppDbContext> options) : base (options)
+        {
+        }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Chamado> Chamados { get; set; }
         public DbSet<Interacao> Interacoes { get; set; }
@@ -41,7 +44,7 @@ namespace DeskFlowAPI
 
                 chamado.Property(ch => ch.Prioridade)
                 .HasColumnName("prioridadeDoChamado") //vai ser: Baixa, Media ou Alta
-                .HasMaxLength(10)
+                .HasMaxLength(20)
                 .IsRequired();
 
                 chamado.Property(ch => ch.Status)
@@ -49,9 +52,9 @@ namespace DeskFlowAPI
                 .HasMaxLength(20)
                 .IsRequired();
 
-                chamado.Property(ch => ch.SolicinanteNome)
+                chamado.Property(ch => ch.SolicitanteNome)
                 .HasColumnName("nomeDeQuemSolicitou")
-                .HasMaxLength(50)
+                .HasMaxLength(200)
                 .IsRequired();
 
                 chamado.Property(ch => ch.Solucao)
@@ -59,8 +62,29 @@ namespace DeskFlowAPI
                 .HasMaxLength(1000);
                 
                 chamado.HasOne(ch => ch.Categoria)
-                .WithMany(ch => ch.Chamados)
+                .WithMany(ca => ca.Chamados)
                 .HasForeignKey(ch => ch.CategoriaId);
+            });
+
+            modelBuilder.Entity<Interacao> (interacao =>
+            {
+                interacao.ToTable("Tb_interacao");
+
+                interacao.HasKey(i => i.Id);
+
+                interacao.Property(i => i.Autor)
+                .HasColumnName("Autor")
+                .HasMaxLength(200)
+                .IsRequired();
+
+                interacao.Property(i => i.Mensagem)
+                .HasColumnName("mensagem")
+                .HasMaxLength(1000)
+                .IsRequired();
+
+                interacao.HasOne(i =>i.Chamado)
+                .WithMany(ch => ch.Interacoes)
+                .HasForeignKey(i => i.ChamadoId);
             });
         }
     }
