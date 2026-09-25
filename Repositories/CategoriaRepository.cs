@@ -22,9 +22,16 @@ namespace DeskFlowAPI.Repositories
             return await _context.Categorias.ToListAsync();
         }
 
-        public async Task<Categoria> ObterPorIdAsync(string id)
+        public async Task<Categoria> ObterPorIdAsync(int id)
         {
             return await _context.Categorias.FindAsync(id);
+        }
+
+        public async Task<Categoria> AtualizarAsync(int id, Categoria categoria)
+        {
+             _context.Categorias.Update(categoria);
+             await _context.SaveChangesAsync();
+             return categoria;
         }
 
         public async Task<bool> PossuiChamadosAsync(int categoriaId)
