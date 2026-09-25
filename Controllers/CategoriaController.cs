@@ -21,12 +21,21 @@ namespace DeskFlowAPI.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> ListarTodos()
+        {
+            var categorias = await _categoriaService.ListarTodosAsync();
+            return Ok(categorias);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Adicionar ([FromBody] Categoria categoria)
         {
             await _categoriaService.AdicionarAsync(categoria);
             return Created("/categoria", categoria);
 
         }
+
+
 
     }
 }
