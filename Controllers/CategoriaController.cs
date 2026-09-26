@@ -7,6 +7,7 @@ using DeskFlowAPI.Services;
 using DeskFlowAPI.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace DeskFlowAPI.Controllers
 {
     [ApiController]
@@ -15,7 +16,7 @@ namespace DeskFlowAPI.Controllers
     {
         private ICategoriaServices _categoriaService;
 
-        public CategoriasController(CategoriaServices categoriaServices)
+        public CategoriasController(ICategoriaServices categoriaServices)
         {
             _categoriaService = categoriaServices;
         }
@@ -28,11 +29,34 @@ namespace DeskFlowAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Adicionar ([FromBody] Categoria categoria)
+        public async Task<IActionResult> Adicionar([FromBody] Categoria categoria)
         {
-            await _categoriaService.AdicionarAsync(categoria);
-            return Created("/categoria", categoria);
+            Categoria novaCategoria = await _categoriaService.AdicionarAsync(categoria);
+            return Created("/categoria", novaCategoria);
+        }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObterPorId([FromRoute] int id)
+        {
+            Categoria categoria = await _categoriaService.ObterPorIdAsync(id);
+            return Ok(categoria);
+        }
+
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Atualizar(int id, [FromBody] Categoria categoriaAtualizada)
+        {
+            var categoriaDb = await _categoriaService.AtualizarAsync(id, categoriaAtualizada);
+            return Ok(categoriaDb);
+        }
+
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Remover(int id)
+        {
+            await _categoriaService.RemoverAsync(id);
+            return NoContent();
         }
 
 
