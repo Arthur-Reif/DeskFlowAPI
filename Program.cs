@@ -19,6 +19,7 @@ builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<ICategoriaServices, CategoriaServices>();
 builder.Services.AddScoped<IChamadoRepository, ChamadoRepository>();
 builder.Services.AddScoped<IChamadoServices, ChamadoServices>();
+builder.Services.AddScoped<IInteracaoRepository, InteracaoRepository>();
 
 var app = builder.Build();
 

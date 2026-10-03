@@ -12,7 +12,8 @@ namespace DeskFlowAPI.Services.Interfaces
         Task<Chamado> AdicionarAsync(CriarChamadoDto chamadoDto);
 
         Task IniciarAsync(int id);
-
+        Task<Interacao> AdicionarInteracaoAsync(int chamadoId, CriarInteracaoDto interacaoDto);
         Task EncerrarAsync(int id, EncerrarChamadoDto chamadoDto);
+
     }
 }

@@ -9,13 +9,16 @@ namespace DeskFlowAPI.Services
     {
         private readonly IChamadoRepository _chamadoRepository;
         private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IInteracaoRepository _interacaoRepository;
 
         public ChamadoServices(
             IChamadoRepository chamadoRepository,
-            ICategoriaRepository categoriaRepository)
+            ICategoriaRepository categoriaRepository,
+            IInteracaoRepository interacaoRepository)
         {
             _chamadoRepository = chamadoRepository;
             _categoriaRepository = categoriaRepository;
+            _interacaoRepository = interacaoRepository;
         }
         public async Task<List<Chamado>> ListarTodosAsync(StatusChamado? status, Prioridade? prioridade, int? categoriaId)
         {
@@ -97,6 +100,30 @@ namespace DeskFlowAPI.Services
             chamado.DataFechamento = DateTime.UtcNow;
 
             await _chamadoRepository.AtualizarAsync(chamado);
+        }
+        public async Task<Interacao> AdicionarInteracaoAsync(int chamadoId, CriarInteracaoDto interacaoDto)
+        {
+            var chamado = await _chamadoRepository.ObterPorIdAsync(chamadoId);
+
+            if (chamado is null)
+            {
+                throw new KeyNotFoundException("Chamado não encontrado.");
+            }
+
+            if (chamado.Status == StatusChamado.Fechado)
+            {
+                throw new InvalidOperationException("Chamados fechados não podem receber novas interações.");
+            }
+
+            var interacao = new Interacao
+            {
+                ChamadoId = chamadoId,
+                Autor = interacaoDto.Autor,
+                Mensagem = interacaoDto.Mensagem,
+                DataRegistro = DateTime.UtcNow
+            };
+
+            return await _interacaoRepository.AdicionarAsync(interacao);
         }
     }
 }

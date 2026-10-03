@@ -57,5 +57,12 @@ namespace DeskFlowAPI.Controllers
 
             return NoContent();
         }
+        [HttpPost("{id}/interacoes")]
+        public async Task<IActionResult> AdicionarInteracao(int id, [FromBody] CriarInteracaoDto interacaoDto)
+        {
+            var interacao = await _chamadoServices.AdicionarInteracaoAsync(id, interacaoDto);
+
+            return StatusCode(StatusCodes.Status201Created, interacao);
+        }
     }
 }
