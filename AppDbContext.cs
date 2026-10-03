@@ -65,7 +65,8 @@ namespace DeskFlowAPI
                 
                 chamado.HasOne(ch => ch.Categoria)
                 .WithMany(ca => ca.Chamados)
-                .HasForeignKey(ch => ch.CategoriaId);
+                .HasForeignKey(ch => ch.CategoriaId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Interacao> (interacao =>
@@ -86,7 +87,8 @@ namespace DeskFlowAPI
 
                 interacao.HasOne(i =>i.Chamado)
                 .WithMany(ch => ch.Interacoes)
-                .HasForeignKey(i => i.ChamadoId);
+                .HasForeignKey(i => i.ChamadoId)
+                .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

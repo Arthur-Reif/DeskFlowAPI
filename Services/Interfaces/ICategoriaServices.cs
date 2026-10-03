@@ -1,5 +1,6 @@
 using DeskFlowAPI.Models.Entidades;
 
+
 namespace DeskFlowAPI.Services.Interfaces
 {
     public interface ICategoriaServices

@@ -1,4 +1,7 @@
+using System.Text.Json.Serialization;
+
 namespace DeskFlowAPI.Models.Entidades
+
 {
 //     Interacao: o histórico de conversa dentro do chamado
 
@@ -15,10 +18,16 @@ namespace DeskFlowAPI.Models.Entidades
     public class Interacao
     {
         public int Id { get; set; }
+
         public string Autor { get; set; } = string.Empty;
+
         public string Mensagem { get; set; } = string.Empty;
+
         public DateTime DataRegistro { get; set; }
+
         public int ChamadoId { get; set; }
+
+        [JsonIgnore]
         public Chamado Chamado { get; set; } = null!;
     }
 }

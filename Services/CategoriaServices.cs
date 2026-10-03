@@ -14,7 +14,10 @@ namespace DeskFlowAPI.Services
         }
         public async Task<Categoria> AdicionarAsync(Categoria categoria)
         {
-            return await _categoriaRepository.AdicionarAsync(categoria);
+
+        await _categoriaRepository.AdicionarAsync(categoria);
+
+        return categoria;
         }
 
         public async Task<List<Categoria>> ListarTodosAsync()
