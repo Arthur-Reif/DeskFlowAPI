@@ -6,16 +6,16 @@ namespace DeskFlowAPI.Models.Entidades
     public class Chamado
     {
         public int Id {get; set;}
-        public string Titulo {get; set;}
-        public string Descricao {get; set;}
-        public string Prioridade {get; set;} //implementar validaçao na services
-        public string Status {get; set;} //implementar validaçao na services
-        public string SolicitanteNome {get; set;}
+        public string Titulo {get; set;} = string.Empty;
+        public string Descricao {get; set;} = string.Empty;
+        public Prioridade Prioridade {get; set;} //implementar validaçao na services
+        public StatusChamado Status {get; set;} //implementar validaçao na services
+        public string SolicitanteNome {get; set;} = string.Empty;
         public DateTime DataAbertura {get; set;}
         public DateTime? DataFechamento {get; set;}
-        public string Solucao {get; set;} //pode ser nulo, esta amarelinho pois tem q implementar logica ainda
+        public string? Solucao {get; set;}
         public int CategoriaId {get; set;}
-        public Categoria Categoria {get; set;}
+        public Categoria Categoria {get; set;} = null!;
         public List<Interacao> Interacoes {get; set;} = new ();
     }
 }

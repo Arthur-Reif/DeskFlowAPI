@@ -44,11 +44,13 @@ namespace DeskFlowAPI
 
                 chamado.Property(ch => ch.Prioridade)
                 .HasColumnName("prioridadeDoChamado") //vai ser: Baixa, Media ou Alta
+                .HasConversion<string>()
                 .HasMaxLength(20)
                 .IsRequired();
 
                 chamado.Property(ch => ch.Status)
                 .HasColumnName("statusDoChamado") //vai ser: Aberto, EmAndamento ou Fechado
+                .HasConversion<string>()
                 .HasMaxLength(20)
                 .IsRequired();
 
