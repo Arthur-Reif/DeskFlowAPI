@@ -25,23 +25,42 @@ namespace DeskFlowAPI.Services
             return await _categoriaRepository.ListarTodosAsync();
         }
 
-        public async Task<Categoria> ObterPorIdAsync(int id)
+        public async Task<Categoria?> ObterPorIdAsync(int id)
         {
-            return await _categoriaRepository.ObterPorIdAsync(id);
+            var categoria = await _categoriaRepository.ObterPorIdAsync(id);
+
+            if (categoria is null)
+                throw new KeyNotFoundException("Categoria não encontrada.");
+
+            return categoria;
         }
 
-        public async Task<Categoria> AtualizarAsync(int id, Categoria categoria)
+        public async Task<Categoria> AtualizarAsync(int id,Categoria categoriaAtualizada)
         {
-            return await _categoriaRepository.AtualizarAsync(id, categoria);
+            var categoria =
+                await _categoriaRepository.ObterPorIdAsync(id);
+
+            if (categoria is null)
+                throw new KeyNotFoundException("Categoria não encontrada.");
+
+                categoria.Nome = categoriaAtualizada.Nome;
+
+            return await _categoriaRepository.AtualizarAsync(categoria);
         }
         public async Task RemoverAsync(int id)
         {
-            Categoria categoria = await _categoriaRepository.ObterPorIdAsync(id);
+            var categoria = await _categoriaRepository.ObterPorIdAsync(id);
 
-            if (categoria != null)
-            {
+            if (categoria is null)
+                throw new KeyNotFoundException("Categoria não encontrada.");
+
+            var possuiChamados =
+                await _categoriaRepository.PossuiChamadosAsync(id);
+
+             if (possuiChamados)
+                throw new InvalidOperationException("A categoria possui chamados associados e não pode ser excluída.");
+
                 await _categoriaRepository.RemoverAsync(categoria);
-            }
         }
     }
 }

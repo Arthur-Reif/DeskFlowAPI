@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace DeskFlowAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/categorias")]
     public class CategoriasController : ControllerBase
     {
         private ICategoriaServices _categoriaService;
@@ -38,7 +38,7 @@ namespace DeskFlowAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> ObterPorId([FromRoute] int id)
         {
-            Categoria categoria = await _categoriaService.ObterPorIdAsync(id);
+            Categoria? categoria = await _categoriaService.ObterPorIdAsync(id);
             return Ok(categoria);
         }
 
