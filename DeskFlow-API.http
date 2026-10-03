@@ -6,7 +6,7 @@ GET http://localhost:5257/api/categorias
 
 
 ###
-GET http://localhost:5257/api/categorias/1
+GET http://localhost:5257/api/categorias/5
 
 ###
 
@@ -14,7 +14,7 @@ POST http://localhost:5257/api/categorias
 Content-Type: application/json
 
 {
-  "nome": "Hardware"
+  "nome": "Infraestrutura"
 }
 
 ###
@@ -33,25 +33,27 @@ GET http://localhost:5257/api/chamados
 
 ###
 
-GET http://localhost:5257/api/chamados/2
+GET http://localhost:5257/api/chamados/9999
 
 ###
 POST http://localhost:5257/api/chamados
 Content-Type: application/json
 
 {
-  "titulo": "Problema de rede",
-  "descricao": "Não consigo acessar a internet.",
-  "prioridade": "Media",
-  "solicitanteNome": "Arthur",
-  "categoriaId": 2
+  "titulo": "Computador não liga",
+  "descricao": "Aperto o botão de ligar, mas o computador não liga.",
+  "prioridade": "Baixa",
+  "solicitanteNome": "João Piririn",
+  "categoriaId": 3
 }
 
 ###
-PATCH http://localhost:5257/api/chamados/2/iniciar
+PATCH http://localhost:5257/api/chamados/2
+    
+    
 
 ###
-PATCH http://localhost:5257/api/chamados/2/encerrar
+PATCH http://localhost:5257/api/chamados/3/encerrar
 Content-Type: application/json
 
 {
