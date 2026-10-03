@@ -3,6 +3,7 @@ using DeskFlowAPI.Repositories;
 using DeskFlowAPI.Services;
 using DeskFlowAPI.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using DeskFlowAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ builder.Services.AddScoped<IChamadoServices, ChamadoServices>();
 builder.Services.AddScoped<IInteracaoRepository, InteracaoRepository>();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
