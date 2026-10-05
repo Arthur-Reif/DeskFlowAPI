@@ -1,70 +1,256 @@
 @DeskFlow_API_HostAddress = http://localhost:5257
 
-###
-
-GET http://localhost:5257/api/categorias
-
-
-###
-GET http://localhost:5257/api/categorias/5
-
-###
-
+### 1.1 Criar categoria Hardware
 POST http://localhost:5257/api/categorias
 Content-Type: application/json
 
 {
-  "nome": "Infraestrutura"
+  "nome": "Hardware"
 }
 
-###
+### 1.2 Criar categoria Software
+POST http://localhost:5257/api/categorias
+Content-Type: application/json
+
+{
+  "nome": "Software"
+}
+
+### 1.3 Criar categoria Redes
+POST http://localhost:5257/api/categorias
+Content-Type: application/json
+
+{
+  "nome": "Redes"
+}
+
+### 1.4 Listar todas as categorias
+GET http://localhost:5257/api/categorias
+
+### 1.5 Buscar categoria por ID
+GET http://localhost:5257/api/categorias/1
+
+### 1.6 Buscar categoria inexistente
+GET http://localhost:5257/api/categorias/99999
+
+### 1.7 Atualizar categoria
 PUT http://localhost:5257/api/categorias/1
 Content-Type: application/json
 
 {
-  "nome": "Infraestrutura"
+  "nome": "Hardware e Periféricos"
 }
 
-###
-DELETE http://localhost:5257/api/categorias/1
-
-###
-GET http://localhost:5257/api/chamados
-
-###
-
-GET http://localhost:5257/api/chamados/9999
-
-###
+### 2.1 Criar chamado de prioridade Alta
 POST http://localhost:5257/api/chamados
 Content-Type: application/json
 
 {
   "titulo": "Computador não liga",
-  "descricao": "Aperto o botão de ligar, mas o computador não liga.",
-  "prioridade": "Baixa",
-  "solicitanteNome": "João Piririn",
-  "categoriaId": 3
+  "descricao": "Ao apertar o botão de energia, nada acontece.",
+  "prioridade": "Alta",
+  "solicitanteNome": "Ricardo",
+  "categoriaId": 1
 }
 
-###
-PATCH http://localhost:5257/api/chamados/2
-    
-    
-
-###
-PATCH http://localhost:5257/api/chamados/3/encerrar
+### 2.2 Criar chamado de prioridade Média
+POST http://localhost:5257/api/chamados
 Content-Type: application/json
 
 {
-  "solucao": "Problema resolvido reiniciando o roteador."
+  "titulo": "Sistema apresenta erro",
+  "descricao": "O sistema fecha ao tentar emitir relatório.",
+  "prioridade": "Media",
+  "solicitanteNome": "João",
+  "categoriaId": 2
 }
 
-###
-POST http://localhost:5257/api/chamados/2/interacoes
-Content-Type: application/json 
+
+### 2.3 Criar chamado de prioridade Baixa
+POST http://localhost:5257/api/chamados
+Content-Type: application/json
 
 {
-  "autor": "Arthur",
-  "mensagem": "Vacuo"
+  "titulo": "Internet lenta",
+  "descricao": "A conexão está apresentando lentidão.",
+  "prioridade": "Baixa",
+  "solicitanteNome": "Maria",
+  "categoriaId": 3
 }
+
+### 2.4 Listar todos os chamados
+GET http://localhost:5257/api/chamados
+
+
+### 2.5 Buscar chamado por ID
+GET http://localhost:5257/api/chamados/1
+
+
+### 2.6 Buscar chamado inexistente
+GET http://localhost:5257/api/chamados/99999
+
+
+### 3.1 Filtrar por status
+GET http://localhost:5257/api/chamados?status=Aberto
+
+
+### 3.2 Filtrar por prioridade
+GET http://localhost:5257/api/chamados?prioridade=Alta
+
+### 3.3 Filtrar por categoria
+GET http://localhost:5257/api/chamados?categoriaId=1
+
+
+
+### 3.4 Combinar status + prioridade
+GET http://localhost:5257/api/chamados?status=Aberto&prioridade=Alta
+
+
+### 3.5 Combinar todos os filtros
+GET http://localhost:5257/api/chamados?status=Aberto&prioridade=Alta&categoriaId=1
+
+
+### 4.1 Adicionar interação em chamado Aberto
+POST http://localhost:5257/api/chamados/1/interacoes
+Content-Type: application/json
+
+{
+  "autor": "Suporte TI",
+  "mensagem": "Iniciada análise do equipamento."
+}
+
+### 4.2 Conferir interação no chamado
+GET http://localhost:5257/api/chamados/1
+
+### 5.1 Iniciar atendimento
+PATCH http://localhost:5257/api/chamados/1/iniciar
+
+### 5.2 Conferir novo status
+GET http://localhost:5257/api/chamados/1
+
+### 5.3 Adicionar interação enquanto está EmAndamento
+POST http://localhost:5257/api/chamados/1/interacoes
+Content-Type: application/json
+
+{
+  "autor": "Suporte TI",
+  "mensagem": "Identificado problema na fonte de alimentação."
+}
+
+### 5.4 Encerrar chamado
+PATCH http://localhost:5257/api/chamados/1/encerrar
+Content-Type: application/json
+
+{
+  "solucao": "Fonte de alimentação substituída."
+}
+
+### 5.5 Conferir chamado fechado
+GET http://localhost:5257/api/chamados/1
+
+
+### 6.1 Tentar adicionar interação em chamado Fechado
+POST http://localhost:5257/api/chamados/1/interacoes
+Content-Type: application/json
+
+{
+  "autor": "Suporte TI",
+  "mensagem": "Tentativa de nova interação."
+}
+
+### 6.2 Tentar iniciar chamado Fechado
+PATCH http://localhost:5257/api/chamados/1/iniciar
+
+
+### 6.3 Tentar encerrar chamado que ainda está Aberto
+
+PATCH http://localhost:5257/api/chamados/2/encerrar
+Content-Type: application/json
+
+{
+  "solucao": "Teste"
+}
+
+### 7.1 Criar chamado sem título
+POST http://localhost:5257/api/chamados
+Content-Type: application/json
+
+{
+  "titulo": "",
+  "descricao": "Teste",
+  "prioridade": "Alta",
+  "solicitanteNome": "Ricardo",
+  "categoriaId": 1
+}
+
+### 7.2 Criar chamado sem prioridade
+POST http://localhost:5257/api/chamados
+Content-Type: application/json
+
+{
+  "titulo": "Teste",
+  "descricao": "Chamado sem prioridade.",
+  "solicitanteNome": "Ricardo",
+  "categoriaId": 1
+}
+
+### 7.3 Criar chamado com categoriaId zero
+POST http://localhost:5257/api/chamados
+Content-Type: application/json
+
+{
+  "titulo": "Teste",
+  "descricao": "Teste de categoria inválida.",
+  "prioridade": "Alta",
+  "solicitanteNome": "Ricardo",
+  "categoriaId": 0
+}
+
+### 7.4 Criar chamado com categoria que não existe
+POST http://localhost:5257/api/chamados
+Content-Type: application/json
+
+{
+  "titulo": "Teste",
+  "descricao": "Categoria inexistente.",
+  "prioridade": "Alta",
+  "solicitanteNome": "Ricardo",
+  "categoriaId": 99999
+}
+
+### 7.5 Criar interação sem autor
+POST http://localhost:5257/api/chamados/2/interacoes
+Content-Type: application/json
+
+{
+  "autor": "",
+  "mensagem": "Teste"
+}
+
+### 7.6 Criar interação sem mensagem
+POST http://localhost:5257/api/chamados/2/interacoes
+Content-Type: application/json
+
+{
+  "autor": "Suporte",
+  "mensagem": ""
+}
+
+### 8.1 Tentar excluir categoria que possui chamados
+DELETE http://localhost:5257/api/categorias/1
+
+### 8.2 Criar categoria sem chamados para testar exclusão
+POST http://localhost:5257/api/categorias
+Content-Type: application/json
+
+{
+  "nome": "Categoria para excluir"
+}
+
+### 8.3 Excluir categoria sem chamados
+DELETE http://localhost:5257/api/categorias/4
+
+
+### 9.1 Recurso inexistente
+GET http://localhost:5257/api/chamados/99999
+
