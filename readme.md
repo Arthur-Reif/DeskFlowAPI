@@ -56,7 +56,9 @@ dotnet ef database update
 dotnet run
 ```
 
-**6. Acesse o Swagger para testar os endpoints:**
+**6. Acesse seu visualizador para testar os endpoints:**
+
+**7. Caso você queira utilizar pelo próprio VS CODE, você deve instalar o Rest Client (Do Huachao Mao)**
 
 ```
 http://localhost:5257/swagger
@@ -85,4 +87,4 @@ http://localhost:5257/swagger
 - **Middlewares**: Tratamento e padronização de erros globais da API.
 
 ## 🎥 Vídeo de Apresentação
-<!-- vou por dps -->
+https://drive.google.com/file/d/1cEp3mJl7-WIq8P52t9Kd_Z4LD1lw32xf/view?usp=sharing
